@@ -11,9 +11,13 @@ object_files := $(patsubst  $(src_dir)/%.cpp, $(obj_dir)/%.o, $(source_files))
 depend_files := $(patsubst  $(src_dir)/%.cpp, $(depend_dir)/%.d, $(source_files))
 
 CC := g++
-DFLAG := -MM
+DFLAG := -MM 
 IFLAG := $(addprefix -I, $(include_dir))
-CFLAGS := -Wall
+# -Q - shows every function that was compiled, and after tells how much time was spend to compile programm
+# -Wconversion - shows warnings when code has implicit type conversion
+# -Wold-style-cast - shows warnings when there is old C-style type conversion or implicit
+# -Wshadow - shows warnings when local variable blocks global variable or another local variable
+CFLAGS := -Wall -Werror -Wshadow -Wold-style-cast -Wconversion -pedantic-errors -ggdb -pg
 LIBS := -lGL -lglut
 
 all: $(program)
@@ -22,12 +26,11 @@ $(program): $(object_files)
 	$(CC) $(CFLAGS) $(LIBS) $(object_files) -o $@
 
 $(obj_dir)/%.o: $(src_dir)/%.cpp
-	$(CC) $(DFLAG) $(IFLAG) $< \
-	| sed 's/^/$(obj_dir)\//' > $(patsubst $(src_dir)/%.cpp, $(depend_dir)/%.d, $<) 
+	$(CC) $(DFLAG) $(IFLAG) -MT $@ $< -o $(patsubst $(src_dir)/%.cpp, $(depend_dir)/%.d, $<)
 	$(CC) -c $(CFLAGS) $(IFLAG) $< -o $@
 
 .PHONY: clean
 clean:
-	rm -rf $(object_files) $(depend_files) $(program)
+	rm -rf $(object_files) $(depend_files) $(program) gmon.out
 
 include $(wildcard $(depend_dir)/*.d)

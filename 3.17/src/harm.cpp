@@ -1,5 +1,5 @@
 #include <GL/glut.h>
-
+#include <drawFunction.h>
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
    glutInitWindowSize(windowWidth, windowHeight);
    glutInitWindowPosition(windowPosX, windowPosY);
    glutCreateWindow("3.17");
+
+   glutDisplay(drawFunction());
 
 
    glutMainLoop();
