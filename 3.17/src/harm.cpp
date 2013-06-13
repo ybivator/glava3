@@ -14,7 +14,8 @@ int main(int argc, char *argv[])
    glutInitWindowPosition(windowPosX, windowPosY);
    glutCreateWindow("3.17");
 
-   glutDisplay(drawFunction());
+   glutDisplayFunc(drawFunction);
+   glutReshapeFunc(reshapeFunction);
 
 
    glutMainLoop();

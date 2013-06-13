@@ -17,7 +17,7 @@ IFLAG := $(addprefix -I, $(include_dir))
 # -Wconversion - shows warnings when code has implicit type conversion
 # -Wold-style-cast - shows warnings when there is old C-style type conversion or implicit
 # -Wshadow - shows warnings when local variable blocks global variable or another local variable
-CFLAGS := -Wall -Werror -Wshadow -Wold-style-cast -Wconversion -pedantic-errors -ggdb -pg
+CFLAGS := -Wall -Werror -Wshadow -Wold-style-cast -pedantic-errors -ggdb -pg
 LIBS := -lGL -lglut
 
 all: $(program)
